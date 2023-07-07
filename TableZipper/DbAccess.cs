@@ -8,7 +8,7 @@ namespace TableZipper
     class DbAccess
     {
         private static string ConnectionString = ConfigurationManager.ConnectionStrings["Default"].ConnectionString;
-        public static DataTable Get_table(int offset, int viewcount)
+        public static DataTable Get_table(int skip, int fetchNext)
         {
             DataTable dt = new DataTable();
             try
@@ -18,8 +18,8 @@ namespace TableZipper
                     conn.Open();
                     SqlCommand cmd = new SqlCommand("USP_GET_MeterData", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@offset", offset);
-                    cmd.Parameters.AddWithValue("@viewcount", viewcount);
+                    cmd.Parameters.AddWithValue("@offset", skip);
+                    cmd.Parameters.AddWithValue("@viewcount", fetchNext);
                     SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                     adapter.Fill(dt);
                 }
